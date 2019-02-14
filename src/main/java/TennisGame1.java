@@ -76,18 +76,17 @@ public class TennisGame1 implements TennisGame {
 
     private String calculateScoreWhenAtLeastOnePlayerHasFourPoints() {
         String score;
-        int minusResult = playerOne.getScore()-playerTwo.getScore();
-        if (minusResult==1) score ="Advantage player1";
-        else if (minusResult ==-1) score ="Advantage player2";
-        else if (minusResult>=2) score = "Win for player1";
-        else score ="Win for player2";
+        int minusResult = playerOne.getScore() - playerTwo.getScore();
+        if (minusResult == 1) score = "Advantage player1";
+        else if (minusResult == -1) score = "Advantage player2";
+        else if (minusResult >= 2) score = "Win for player1";
+        else score = "Win for player2";
         return score;
     }
 
     private String calculateScoreWhenThePointsAreEqual() {
         String score;
-        switch (playerOne.getScore())
-        {
+        switch (playerOne.getScore()) {
             case 0:
                 score = "Love-All";
                 break;
