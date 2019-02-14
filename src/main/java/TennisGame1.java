@@ -13,8 +13,7 @@ public class TennisGame1 implements TennisGame {
     public void wonPoint(String playerName) {
         if (hasPlayerOneWonThePoint(playerName)) {
             playerOne.wonPoint();
-        }
-        else {
+        } else {
             playerTwo.wonPoint();
         }
     }
@@ -27,8 +26,7 @@ public class TennisGame1 implements TennisGame {
         String score = "";
         if (playersHaveEqualScores(playerOne.getScore(), playerTwo.getScore())) {
             return calculateScoreWhenThePointsAreEqual();
-        }
-        else if (playersHaveAtLeastFourPoints(playerOne.getScore(), playerTwo.getScore())) {
+        } else if (playersHaveAtLeastFourPoints(playerOne.getScore(), playerTwo.getScore())) {
             return calculateScoreWhenAtLeastOnePlayerHasFourPoints();
         }
 
@@ -36,7 +34,7 @@ public class TennisGame1 implements TennisGame {
     }
 
     private boolean playersHaveAtLeastFourPoints(int scoreOne, int scoreTwo) {
-        return scoreOne>=4 || scoreTwo>=4;
+        return scoreOne >= 4 || scoreTwo >= 4;
     }
 
     private boolean playersHaveEqualScores(int scoreOne, int scoreTwo) {
@@ -46,24 +44,32 @@ public class TennisGame1 implements TennisGame {
 
     private String calculateScoreBetweenZeroToThreeWhenPointsAreNotEqual(String score) {
         int tempScore;
-        for (int i = 1; i<3; i++) {
-            if (i==1) tempScore = playerOne.getScore();
-            else { score+="-"; tempScore = playerTwo.getScore();}
-            switch(tempScore)
-            {
-                case 0:
-                    score+="Love";
-                    break;
-                case 1:
-                    score+="Fifteen";
-                    break;
-                case 2:
-                    score+="Thirty";
-                    break;
-                case 3:
-                    score+="Forty";
-                    break;
+        for (int i = 1; i < 3; i++) {
+            if (i == 1) tempScore = playerOne.getScore();
+            else {
+                score += "-";
+                tempScore = playerTwo.getScore();
             }
+            score += displayScores(tempScore);
+        }
+        return score;
+    }
+
+    private String displayScores(int tempScore) {
+        String score = "";
+        switch (tempScore) {
+            case 0:
+                score += "Love";
+                break;
+            case 1:
+                score += "Fifteen";
+                break;
+            case 2:
+                score += "Thirty";
+                break;
+            case 3:
+                score += "Forty";
+                break;
         }
         return score;
     }
