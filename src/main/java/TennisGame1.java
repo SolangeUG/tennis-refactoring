@@ -3,8 +3,6 @@ public class TennisGame1 implements TennisGame {
 
     private final Player playerOne;
     private final Player playerTwo;
-    private int m_score1 = 0;
-    private int m_score2 = 0;
 
     public TennisGame1(Player playerOne, Player playerTwo) {
 
@@ -13,32 +11,44 @@ public class TennisGame1 implements TennisGame {
     }
 
     public void wonPoint(String playerName) {
-        if (playerName == playerOne.getName())
-            m_score1 += 1;
-        else
-            m_score2 += 1;
+        if (hasPlayerOneWonThePoint(playerName)) {
+            playerOne.wonPoint();
+        }
+        else {
+            playerTwo.wonPoint();
+        }
+    }
+
+    private boolean hasPlayerOneWonThePoint(String playerName) {
+        return playerName.equals(playerOne.getName());
     }
 
     public String getScore() {
         String score = "";
-        if (m_score1==m_score2) {
-            score = calculateScoreWhenThePointsAreEqual();
+        if (playersHaveEqualScores(playerOne.getScore(), playerTwo.getScore())) {
+            return calculateScoreWhenThePointsAreEqual();
         }
-        else if (m_score1>=4 || m_score2>=4) {
-            score = calculateScoreWhenAtLeastOnePlayerHasFourPoints();
+        else if (playersHaveAtLeastFourPoints(playerOne.getScore(), playerTwo.getScore())) {
+            return calculateScoreWhenAtLeastOnePlayerHasFourPoints();
         }
-        else {
-            score = calculateScoreBetweenZeroToThreeWhenPointsAreNotEqual(score);
-        }
-        return score;
+
+        return calculateScoreBetweenZeroToThreeWhenPointsAreNotEqual(score);
+    }
+
+    private boolean playersHaveAtLeastFourPoints(int scoreOne, int scoreTwo) {
+        return scoreOne>=4 || scoreTwo>=4;
+    }
+
+    private boolean playersHaveEqualScores(int scoreOne, int scoreTwo) {
+        return scoreOne == scoreTwo;
     }
 
 
     private String calculateScoreBetweenZeroToThreeWhenPointsAreNotEqual(String score) {
         int tempScore;
         for (int i = 1; i<3; i++) {
-            if (i==1) tempScore = m_score1;
-            else { score+="-"; tempScore = m_score2;}
+            if (i==1) tempScore = playerOne.getScore();
+            else { score+="-"; tempScore = playerTwo.getScore();}
             switch(tempScore)
             {
                 case 0:
@@ -60,7 +70,7 @@ public class TennisGame1 implements TennisGame {
 
     private String calculateScoreWhenAtLeastOnePlayerHasFourPoints() {
         String score;
-        int minusResult = m_score1-m_score2;
+        int minusResult = playerOne.getScore()-playerTwo.getScore();
         if (minusResult==1) score ="Advantage player1";
         else if (minusResult ==-1) score ="Advantage player2";
         else if (minusResult>=2) score = "Win for player1";
@@ -70,7 +80,7 @@ public class TennisGame1 implements TennisGame {
 
     private String calculateScoreWhenThePointsAreEqual() {
         String score;
-        switch (m_score1)
+        switch (playerOne.getScore())
         {
             case 0:
                 score = "Love-All";

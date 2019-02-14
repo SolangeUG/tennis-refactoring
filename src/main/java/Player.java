@@ -1,6 +1,6 @@
 public class Player {
     private final String name;
-    private final int score;
+    private int score;
 
     public Player(String name, int score) {
 
@@ -14,5 +14,9 @@ public class Player {
 
     public int getScore() {
         return score;
+    }
+
+    public void wonPoint() {
+        score += 1;
     }
 }
